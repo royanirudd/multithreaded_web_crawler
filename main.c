@@ -9,21 +9,20 @@ int main(int argc, char *argv[]) {
     // Initialize libcurl
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
-    // Initialize URL queue and visited set
-    URLQueue* urlQueue = initQueue();
-    VisitedSet* visitedSet = initSet();
+    CrawlerConfig config;
+    initCrawler(&config, MAX_DEPTH);
 
     printf("Web Crawler initialized.\n");
 
     // TODO: Implement command-line argument parsing
-    // TODO: Set up threads
-    // TODO: Start crawling process
-    // TODO: Clean up and exit
+    const char* seedUrl = "http://example.com";  // Default seed URL
+    
+    startCrawling(&config, seedUrl);
 
     // Cleanup
     curl_global_cleanup();
-    freeQueue(urlQueue);
-    freeSet(visitedSet);
+    freeQueue(config.urlQueue);
+    freeSet(config.visitedSet);
 
     return 0;
 }
